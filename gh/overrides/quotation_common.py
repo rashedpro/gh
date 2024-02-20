@@ -5,8 +5,6 @@ from erpnext.controllers.taxes_and_totals import calculate_taxes_and_totals
 
 
 def override_calculate_taxes_and_totals(doc,method):
-	print("$$$$$$$$$$")
-	print(doc.doctype)
 	calculate_taxes_and_totals.calculate_item_values=calculate_item_values
 
 def calculate_item_values(self):
@@ -76,3 +74,13 @@ def calculate_item_values(self):
 				)
 
 				item.item_tax_amount = 0.0
+
+
+
+def recalculate_item_values(doc,method):	
+	for item in doc.get("items"):
+		if item.doctype in ["Quotation Item"]:
+			if item.maintain_stock:
+				item.amount=flt(item.total_area*item.rate)
+				item.net_amount=item.amount
+				item.base_net_amount=item.amount

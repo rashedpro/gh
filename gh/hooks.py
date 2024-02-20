@@ -119,7 +119,9 @@ app_license = "MIT"
 doc_events = {
 	"Quotation": {
 		"validate": "gh.overrides.quotation_common.override_calculate_taxes_and_totals",
-	}
+        "after_insert":"gh.overrides.quotation_common.recalculate_item_values",
+        "before_submit":"gh.overrides.quotation_common.recalculate_item_values",
+	} 
 }
 
 # Scheduled Tasks
