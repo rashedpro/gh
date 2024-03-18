@@ -81,7 +81,7 @@ def recalculate_item_values(doc,method):
 	total=0
 	for item in doc.get("items"):
 		if item.doctype in ["Quotation Item"]:
-			if item.maintain_stock:
+			if item.maintain_stock or item.item_group=="Service / Calc":
 				item.amount=flt(item.total_area*item.rate)
 				item.net_amount=item.amount
 				item.base_net_amount=item.amount
