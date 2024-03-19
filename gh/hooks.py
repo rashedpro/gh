@@ -126,6 +126,16 @@ doc_events = {
         "validate": "gh.overrides.quotation_common.override_calculate_taxes_and_totals",
         "after_insert":"gh.overrides.quotation_common.recalculate_item_values",
         "before_submit":"gh.overrides.quotation_common.recalculate_item_values",
+	},
+    "Sales Invoice":{
+        "validate": "gh.overrides.quotation_common.override_calculate_taxes_and_totals",
+        "after_insert":"gh.overrides.quotation_common.recalculate_item_values",
+        "before_submit":"gh.overrides.quotation_common.recalculate_item_values",
+	},
+    "Delivery Note":{
+        "validate": "gh.overrides.quotation_common.override_calculate_taxes_and_totals",
+        "after_insert":"gh.overrides.quotation_common.recalculate_item_values",
+        "before_submit":"gh.overrides.quotation_common.recalculate_item_values",
 	}
 }
 
