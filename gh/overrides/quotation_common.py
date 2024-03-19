@@ -65,7 +65,7 @@ def calculate_item_values(self):
 					item.amount = flt(item.rate * item.qty, item.precision("amount"))
 
 				item.net_amount = item.amount
-				if item.doctype in ["Quotation Item"]:
+				if item.doctype in ["Quotation Item","Sales Order Item","Sales Invoice Item","Delivery Note Item"]:
 					self.doc.total_area=self.doc.total_area+item.area
 					if item.maintain_stock or item.item_group=="Service / Calc":
 						item.amount=flt(item.total_area*item.rate)
@@ -83,7 +83,7 @@ def recalculate_item_values(doc,method):
 	total_area=0
 	for item in doc.get("items"):
 		total_area=total_area+item.area
-		if item.doctype in ["Quotation Item"]:
+		if item.doctype in ["Quotation Item","Sales Order Item","Sales Invoice Item","Delivery Note Item"]:
 			if item.maintain_stock or item.item_group=="Service / Calc":
 				item.amount=flt(item.total_area*item.rate)
 				item.net_amount=item.amount
