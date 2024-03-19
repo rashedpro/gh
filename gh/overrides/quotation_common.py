@@ -8,6 +8,7 @@ def override_calculate_taxes_and_totals(doc,method):
 	calculate_taxes_and_totals.calculate_item_values=calculate_item_values
 
 def calculate_item_values(self):
+		self.doc.total_area=0
 		if self.doc.get("is_consolidated"):
 			return
 
@@ -65,25 +66,28 @@ def calculate_item_values(self):
 
 				item.net_amount = item.amount
 				if item.doctype in ["Quotation Item"]:
-					if item.maintain_stock:
+					self.doc.total_area=self.doc.total_area+item.area
+					if item.maintain_stock or item.item_group=="Service / Calc":
 						item.amount=flt(item.total_area*item.rate)
 						item.net_amount=item.amount
 						item.base_net_amount=item.amount
 				self._set_in_company_currency(
 					item, ["price_list_rate", "rate", "net_rate", "amount", "net_amount"]
 				)
-
 				item.item_tax_amount = 0.0
 
 
 
 def recalculate_item_values(doc,method):	
 	total=0
+	total_area=0
 	for item in doc.get("items"):
+		total_area=total_area+item.area
 		if item.doctype in ["Quotation Item"]:
 			if item.maintain_stock or item.item_group=="Service / Calc":
 				item.amount=flt(item.total_area*item.rate)
 				item.net_amount=item.amount
 				item.base_net_amount=item.amount
 			total=total+item.amount
+	doc.total_area=total_area
 	doc.total=total
